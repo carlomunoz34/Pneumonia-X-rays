@@ -1,1 +1,0 @@
-{"learing rate": 0.001, "epoch": 1, "conv_shape": [32, 64], "vanilla_shape": [1024], "activation": "relu"}

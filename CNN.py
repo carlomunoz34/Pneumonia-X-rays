@@ -142,7 +142,7 @@ class ConvolutionalNetwork:
                 final_test_cost += sess.run(self.cost_op, feed_dict={self.X: Xtest, self.Y: Ytest})
             
             #Save the model
-            self.sess_path = "../Model/current_model.ckpt"
+            self.sess_path = "../Models/current/current_model.ckpt"
             self.saver.save(sess, self.sess_path)
         
         t1 = datetime.now()
