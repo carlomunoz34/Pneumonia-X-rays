@@ -9,7 +9,7 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
     best_dict = None
 
     for _ in range(iterations):
-        #Choose hiperparams
+        #Choose hyperparams
         dict = {"learing rate": learning_rates[np.random.randint(0, len(learning_rates))],
                 "epoch": epochs[np.random.randint(0, len(epochs))], 
                 "conv_shape": conv_shapes[np.random.randint(0, len(conv_shapes))],
@@ -19,7 +19,6 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
         model = ConvolutionalNetwork((128, 128, 3), 2, conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
-        #134
         history = model.fit(get_next_batch, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
                     batch_number=2, epochs=dict["epoch"], verbose=False, next_test_batch=get_test_78, 
                     test_batch_number=78)
@@ -35,16 +34,10 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
     f.close()
 
 if __name__ == "__main__":
-    #learning_rates = [0.001, 0.0001]
-    #epochs = [3, 4]
-    #conv_shapes = [(32, 64), (64, 128)]
-    #vanilla_shapes = [(1024,), (512, 512), (128, 256, 512)]
-    #activations = ['relu', 'relu', 'tanh', 'relu', 'relu']
-
     learning_rates = [0.001, 0.0001]
-    epochs = [1]
+    epochs = [3, 4]
     conv_shapes = [(32, 64), (64, 128)]
     vanilla_shapes = [(1024,), (512, 512), (128, 256, 512)]
-    activations = ['relu', 'relu', 'tanh', 'relu', 'relu']
+    activations = ['relu', 'relu', 'tanh', 'relu']
 
     random_search(1, learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
