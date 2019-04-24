@@ -8,10 +8,13 @@ from datetime import datetime
 import sys
 
 class ConvolutionalNetwork:
-    def __init__(self, X_shape, Y_shape, conv_shapes=(64, 128), 
-            vanilla_shapes=(4096, 4096), activation='relu'):
+    def __init__(self):
+        self.__ensambled = False
 
-        self.sess_path = None
+
+    def ensamble(self, X_shape, Y_shape, conv_shapes=(64, 128), vanilla_shapes=(4096, 4096), activation='relu'):
+
+        self.sess_path = ""
         self.D = X_shape
         self.K = Y_shape
 
@@ -49,10 +52,13 @@ class ConvolutionalNetwork:
         #Saver
         self.saver = tf.train.Saver()
 
+        self.__ensambled = True    
+
 
     def fit(self, next_batch, next_test_batch, learning_rate=0.001, beta1=0.9, beta2=0.999, batch_number=100, 
-            test_batch_number=5, epochs=5, verbose=True):
+            test_batch_number=5, epochs=5, verbose=True, best=float('inf')):
 
+        assert self.__ensambled
         #Train
         self.train_op = tf.train.AdamOptimizer(learning_rate=learning_rate, beta1=beta1, beta2=beta2).minimize(self.cost_op)
 
@@ -141,9 +147,10 @@ class ConvolutionalNetwork:
                 Xtest, Ytest = next_test_batch(i)
                 final_test_cost += sess.run(self.cost_op, feed_dict={self.X: Xtest, self.Y: Ytest})
             
-            #Save the model
-            self.sess_path = "../Models/current/current_model.ckpt"
-            self.saver.save(sess, self.sess_path)
+            if final_test_cost < best:
+                #Save the model
+                self.sess_path = "../Models/best/best_model.ckpt"
+                self.saver.save(sess, self.sess_path)
         
         t1 = datetime.now()
 
@@ -152,6 +159,7 @@ class ConvolutionalNetwork:
             print("Elapsed time", t1 - t0)
 
         return costs_train, accuracies_train, costs_test, accuracies_test, final_test_cost
+
 
     def restore_session(self, path):
         self.sess_path = path
