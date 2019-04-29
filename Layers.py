@@ -27,7 +27,7 @@ class ConvLayer(Layer):
 
 
     def __init_weight(self, shape):
-        return (np.random.randn(*shape) / np.sqrt(2.0 / np.prod(shape[:-1]))).astype(np.float32)
+        return tf.random.normal(shape, dtype=tf.float32) / np.sqrt(2.0 / np.prod(shape[:-1])).astype(np.float32)
 
 
 class PoolingLayer(Layer):
@@ -143,7 +143,7 @@ class ConvBatchLayer(Layer):
         return self.activation(out)
 
     def __init_weight(self, shape):
-        return (np.random.randn(*shape) / np.sqrt(2.0 / np.prod(shape[:-1]))).astype(np.float32)
+        return tf.random.normal(shape, dtype=tf.float32) / np.sqrt(2.0 / np.prod(shape[:-1])).astype(np.float32)
 
 
 class Conv2BatchPoolingLayer(Layer):
