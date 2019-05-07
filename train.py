@@ -9,7 +9,7 @@ import sys
 import tensorflow as tf
 import os
 
-SEED = 7
+SEED = 3435
 
 def get_best():
     if not os.path.isfile("best_model.json"):
@@ -37,7 +37,7 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
     best_dict = None
 
     model = ConvolutionalNetwork2()
-    print("Starting random search")
+    print("Starting random search at:", datetime.now())
 
     t0 = datetime.now()
     for i in range(iterations):
@@ -48,7 +48,7 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
 
         print("%i of %i:" %(i+1, iterations), dict)
         
-        model.ensamble((128, 128, 3), conv_shapes=dict["conv_shape"], 
+        model.ensamble((200, 200, 3), conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
         score = model.fit(get_next_batch, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
@@ -133,11 +133,18 @@ def grid_search(learning_rates, epochs, conv_shapes, vanilla_shapes, activations
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
-    learning_rates = [0.001, 0.0001, 0.01]
-    epochs = [2, 3, 4]
-    conv_shapes = [(32, 64), (64, 128), (64, 64), (128, 128)]
+    learning_rates = [0.001, 0.0001]
+    epochs = [5, 8, 10]
+    conv_shapes = [(32, 64), (64, 128), (64, 64), (128, 128), (30, 60, 90)]
     vanilla_shapes = [(1024,), (512, 512), (512, 256, 128)]
     activations = ['relu', 'tanh']
+
+    #learning_rates = [0.001]
+    #epochs = [10]
+    #conv_shapes = [(30, 60, 90)]
+    #vanilla_shapes = [(512, 256)]
+    #activations = ['relu']
+
 
     #grid_search(learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
     random_search(4, learning_rates, epochs, conv_shapes, vanilla_shapes, activations)

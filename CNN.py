@@ -436,12 +436,16 @@ class ConvolutionalNetwork2:
         id = 6
         for M2 in vanilla_shapes:
             self.__layers.append(VanillaBatchLayer(str(id), M1, M2))
-            self.__layers.append(DropoutLayer(0.40))
+            self.__layers.append(DropoutLayer(0.25))
             id += 1
             M1 = M2
 
+        #Delete the last dropout layer
+        del self.__layers[-1]
+        #Add a bigger dropout
+        self.__layers.append(DropoutLayer(0.40))
+
         #Last layer
-        #self.__layers.append(VanillaLayer(str(id), M1, self.K, lambda X: X))
         self.__layers.append(VanillaLayer(str(id), M1, self.K, tf.nn.sigmoid))
 
 
