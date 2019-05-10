@@ -1,5 +1,5 @@
 from CNN import ConvolutionalNetwork, ConvolutionalNetwork2
-from utils import get_test2, get_next_batch_random, get_val, get_test_26, get_test_78
+from utils import get_test2, get_next_batch_random, get_next_batch, get_val, get_test_26, get_test_78
 from matplotlib import pyplot as plt
 import numpy as np
 import json
@@ -26,8 +26,8 @@ def get_best():
 def get_random_dict(learning_rates, epochs, conv_shapes, vanilla_shapes, activations):
     dict = {"learing rate": np.random.choice(learning_rates),
             "epoch": np.random.choice(epochs),
-            "conv_shape": np.random.choice(conv_shapes),
-            "vanilla_shape": np.random.choice(vanilla_shapes),
+            "conv_shape": conv_shapes[np.random.randint(len(conv_shapes))],
+            "vanilla_shape": vanilla_shapes[np.random.randint(len(vanilla_shapes))],
             "activation": np.random.choice(activations)}
 
     return dict
@@ -77,12 +77,18 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
-    learning_rates = [0.001, 0.0001]
-    epochs = [8, 9, 10]
-    conv_shapes = [(32, 64), (64, 128), (64, 64), (128, 128), (30, 60, 90)]
-    vanilla_shapes = [(1024,), (512, 512), (512, 256, 128)]
-    activations = ['relu', 'tanh']
+    #learning_rates = [0.001, 0.0001]
+    #epochs = [8, 9, 10]
+    #conv_shapes = [(32, 64), (64, 128), (64, 64), (128, 128), (30, 60, 90)]
+    #vanilla_shapes = [(1024,), (512, 512), (512, 256, 128)]
+    #activations = ['relu', 'tanh']
 
-    random_search(5, learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
+    learning_rates = [0.001]
+    epochs = [5]
+    conv_shapes = [(30, 60, 90)]
+    vanilla_shapes = [(512, 256, 128)]
+    activations = ['relu']
+
+    random_search(1, learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
 
     

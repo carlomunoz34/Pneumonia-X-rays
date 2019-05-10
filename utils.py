@@ -167,7 +167,7 @@ def get_next_batch(epoch, img_size=128):
     Ytrain = np.array(Ytrain)
     #Ytrain = to_categorical(Ytrain, num_classes=2)
     Xtrain, Ytrain = shuffle(Xtrain, Ytrain)
-    Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
+    #Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
 
     return Xtrain, Ytrain
 
@@ -200,7 +200,7 @@ def get_next_batch_random(epoch, img_size=128):
     Ytrain = np.array(Ytrain)
     #Ytrain = to_categorical(Ytrain, num_classes=2)
     Xtrain, Ytrain = shuffle(Xtrain, Ytrain)
-    Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
+    #Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
 
     return Xtrain, Ytrain
 
@@ -344,8 +344,6 @@ def get_test_78(epoch, img_size=128):
 
     Xtrain = np.array(Xtrain)
     Ytrain = np.array(Ytrain)
-    #Ytrain = to_categorical(Ytrain, num_classes=2)
-    #Xtrain, Ytrain = shuffle(Xtrain, Ytrain)
-    Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
+    #Ytrain = np.reshape(Ytrain, list(Ytrain.shape) + [1])
 
     return Xtrain, Ytrain

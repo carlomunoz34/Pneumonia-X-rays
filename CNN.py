@@ -122,11 +122,7 @@ class ConvolutionalNetwork:
 
                     elif show_percentage:
                         percentage = 100 * (epoch * batch_number + batch+1) / (epochs * batch_number)
-                        if batch == 0 and epoch == 0:
-                            print(str(percentage) + "%")
-                        else:
-                            sys.stdout.write("\r    ")
-                            sys.stdout.write("\r" + str(percentage) + "%")
+                        sys.stdout.write("\r%.2f"%(percentage) + "%")
 
                 #Test
                 if verbose:
