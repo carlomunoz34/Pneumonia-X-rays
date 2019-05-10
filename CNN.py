@@ -212,8 +212,8 @@ class ConvolutionalNetwork:
 
         id = 6
         for M2 in vanilla_shapes:
-            self.__layers.append(VanillaBatchLayer(str(id), M1, M2))
-            self.__layers.append(DropoutLayer(0.25))
+            self.__layers.append(VanillaLayer(str(id), M1, M2))
+            self.__layers.append(DropoutLayer(0.40))
             id += 1
             M1 = M2
 
