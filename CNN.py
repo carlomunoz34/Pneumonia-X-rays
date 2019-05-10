@@ -12,7 +12,7 @@ class ConvolutionalNetwork:
         self.__ensambled = False
 
 
-    def ensamble(self, X_shape, Y_shape, conv_shapes=(64, 128), vanilla_shapes=(4096, 4096), activation='relu'):
+    def assemble(self, X_shape, Y_shape, conv_shapes=(64, 128), vanilla_shapes=(4096, 4096), activation='relu'):
 
         self.sess_path = ""
         self.D = X_shape

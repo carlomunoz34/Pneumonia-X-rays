@@ -49,7 +49,7 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
 
         print("%i of %i:" %(i+1, iterations), dict)
         
-        model.ensamble((128, 128, 3), 2, conv_shapes=dict["conv_shape"], 
+        model.assemble((128, 128, 3), 2, conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
         score = model.fit(get_next_batch, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
