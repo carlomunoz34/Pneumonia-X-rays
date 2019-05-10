@@ -1,5 +1,5 @@
 from CNN import ConvolutionalNetwork, ConvolutionalNetwork2
-from utils import get_test2, get_next_batch2, get_val, get_test_26, get_test_78
+from utils import get_test2, get_next_batch_random, get_val, get_test_26, get_test_78
 from matplotlib import pyplot as plt
 import numpy as np
 import json
@@ -24,11 +24,11 @@ def get_best():
 
 
 def get_random_dict(learning_rates, epochs, conv_shapes, vanilla_shapes, activations):
-    dict = {"learing rate": learning_rates[np.random.randint(0, len(learning_rates))],
-            "epoch": epochs[np.random.randint(0, len(epochs))], 
-            "conv_shape": conv_shapes[np.random.randint(0, len(conv_shapes))],
-            "vanilla_shape": vanilla_shapes[np.random.randint(0, len(vanilla_shapes))],
-            "activation": activations[np.random.randint(0, len(activations))]}
+    dict = {"learing rate": np.random.choice(learning_rates),
+            "epoch": np.random.choice(epochs),
+            "conv_shape": np.random.choice(conv_shapes),
+            "vanilla_shape": np.random.choice(vanilla_shapes),
+            "activation": np.random.choice(activations)}
 
     return dict
 
@@ -52,8 +52,8 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
         model.ensamble((128, 128, 3), 2, conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
-        score = model.fit(get_next_batch2, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
-                    batch_number=134, epochs=dict["epoch"], verbose=False, next_test_batch=get_test_78, 
+        score = model.fit(get_next_batch, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
+                    batch_number=424, epochs=dict["epoch"], verbose=False, next_test_batch=get_test_78, 
                     test_batch_number=78, best=best_score)
 
         dict['cost'] = score

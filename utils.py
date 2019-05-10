@@ -141,8 +141,8 @@ def get_next_batch(epoch, img_size=128):
 
     #Process normal images
     train_normal_files = glob("../chest_xray/train/NORMAL/*.jpeg")
-    normal_lower = epoch * 10
-    normal_upper = normal_lower + 10
+    normal_lower = epoch * 22
+    normal_upper = normal_lower + 22
 
     for i in range(normal_lower, normal_upper):
         img = cv2.imread(train_normal_files[i])
@@ -172,17 +172,15 @@ def get_next_batch(epoch, img_size=128):
     return Xtrain, Ytrain
 
 
-def get_next_batch2(epoch, img_size=128):
+def get_next_batch_random(epoch, img_size=128):
     Xtrain = []
     Ytrain = []
 
     #Process normal images
     train_normal_files = glob("../chest_xray/train/NORMAL/*.jpeg")
-    normal_lower = epoch * 10
-    normal_upper = normal_lower + 10
 
-    for i in range(normal_lower, normal_upper):
-        img = cv2.imread(train_normal_files[i])
+    for i in range(22):
+        img = cv2.imread(np.random.choice(train_normal_files))
         img = cv2.resize(img, (img_size, img_size), interpolation=cv2.INTER_CUBIC)
 
         Xtrain.append(img.astype(np.float32))
@@ -191,11 +189,9 @@ def get_next_batch2(epoch, img_size=128):
 
     #Process pneumonia images
     train_phneumonia_files = glob("../chest_xray/train/PNEUMONIA/*.jpeg")
-    pneumonia_lower = epoch * 14
-    pneumonia_upper = pneumonia_lower + 14
 
-    for i in range(pneumonia_lower, pneumonia_upper):
-        img = cv2.imread(train_phneumonia_files[i])
+    for i in range(28):
+        img = cv2.imread(np.random.choice(train_phneumonia_files))
         img = cv2.resize(img, (img_size, img_size), interpolation=cv2.INTER_CUBIC)
         Xtrain.append(img.astype(np.float32))
         Ytrain.append(1)
