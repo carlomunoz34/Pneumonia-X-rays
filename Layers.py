@@ -16,6 +16,7 @@ class ConvLayer(Layer):
 
         W_init = self.__init_weight(filter_shape)
         b_init = tf.zeros(M2, dtype=tf.float32)
+
         self.W = tf.Variable(W_init, name="W" + id)
         self.b = tf.Variable(b_init, name="b" + id)
 
@@ -27,7 +28,7 @@ class ConvLayer(Layer):
 
 
     def __init_weight(self, shape):
-        return tf.random.normal(shape, dtype=tf.float32) / np.sqrt(2.0 / np.prod(shape[:-1])).astype(np.float32)
+        return tf.random.normal(shape, dtype=tf.float32)
 
 
 class PoolingLayer(Layer):
@@ -40,10 +41,9 @@ class VanillaLayer(Layer):
         self.activation = activation
         self.id = id
 
-        W_init = tf.random.normal((M1, M2), dtype=tf.float32) / np.sqrt(M1 + M2).astype(np.float32)
-        #W_init = np.random.randn(M1, M2) / np.sqrt(M1 + M2)
+        W_init = tf.random.normal((M1, M2), dtype=tf.float32)
         b_init = tf.zeros((M2,), dtype=tf.float32)
-        #b_init = np.zeros(M2)
+        
         self.W = tf.Variable(W_init, name="W" + id)
         self.b = tf.Variable(b_init, name="b" + id)
         
@@ -72,7 +72,7 @@ class Conv3PoolingLayer(Layer):
         self.third_conv = ConvLayer(id + "_" + "3", M2, M2, activation)
         self.pooling_layer = PoolingLayer()
 
-    def forward(self, X):
+    def forward(self, X, training=True):
         Z1 = self.first_conv.forward(X)
         Z2 = self.second_conv.forward(Z1)
         Z3 = self.third_conv.forward(Z2)
@@ -177,7 +177,7 @@ class VanillaBatchLayer(Layer):
         self.activation = activation
         self.id = id
 
-        W_init = tf.random.normal((M1, M2), dtype=tf.float32) / np.sqrt(M1 + M2).astype(np.float32)
+        W_init = tf.random.normal((M1, M2), dtype=tf.float32)
         
         self.W = tf.Variable(W_init, name="W" + id)
         self.b = tf.Variable(tf.zeros((M2,), dtype=tf.float32), name="b" + id)

@@ -40,11 +40,14 @@ def transform(num_of_transformations, path):
             sk.io.imsave(new_image_path, new_image)
 
             sys.stdout.write("\r" + str(transformed_images))
+    sys.stdout.write("\n")
 
 
 if __name__ == '__main__':
     path = '../chest_xray/train/PNEUMONIA/'
+    print("Augmenting pneumonia images:")
     transform(8000, path)
 
+    print("Augmenting normal images:")
     path = '../chest_xray/train/NORMAL/'
     transform(8000, path)

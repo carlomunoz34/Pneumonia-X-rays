@@ -1,5 +1,7 @@
 from CNN import ConvolutionalNetwork, ConvolutionalNetwork2
-from utils import get_test2, get_next_batch_random, get_next_batch, get_val, get_test_26, get_test_78
+from VGG10 import VGG10
+from VGG16 import VGG16
+from utils import get_next_batch_424, get_test_78, get_next_batch_848
 from matplotlib import pyplot as plt
 import numpy as np
 import json
@@ -24,11 +26,11 @@ def get_best():
 
 
 def get_random_dict(learning_rates, epochs, conv_shapes, vanilla_shapes, activations):
-    dict = {"learing rate": np.random.choice(learning_rates),
-            "epoch": np.random.choice(epochs),
+    dict = {"learing rate": learning_rates[np.random.randint(len(learning_rates))],
+            "epoch": epochs[np.random.randint(len(epochs))],
             "conv_shape": conv_shapes[np.random.randint(len(conv_shapes))],
             "vanilla_shape": vanilla_shapes[np.random.randint(len(vanilla_shapes))],
-            "activation": np.random.choice(activations)}
+            "activation": activations[np.random.randint(len(activations))]}
 
     return dict
 
@@ -42,19 +44,19 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
     t0 = datetime.now()
     for i in range(iterations):
         tf.random.set_random_seed(SEED)
-        model = ConvolutionalNetwork()
+        model = VGG16(save_path="../Models/temp/Vgg16.ckpt")
 
         #Choose hyperparams
         dict = get_random_dict(learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
 
         print("%i of %i:" %(i+1, iterations), dict)
         
-        model.assemble((128, 128, 3), 2, conv_shapes=dict["conv_shape"], 
+        model.assemble((224, 224, 3), 2, conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
-        score = model.fit(get_next_batch, learning_rate=dict["learing rate"], beta1=0.9, beta2=0.999, 
-                    batch_number=424, epochs=dict["epoch"], verbose=False, next_test_batch=get_test_78, 
-                    test_batch_number=78, best=best_score)
+        score = model.fit(get_next_batch_848, learning_rate=dict["learing rate"], 
+                    batch_number=848, epochs=dict["epoch"], next_test_batch=get_test_78, 
+                    test_batch_number=78, best=best_score, show_percentage=True)
 
         dict['cost'] = score
         dict['seed'] = SEED
@@ -83,12 +85,11 @@ if __name__ == "__main__":
     #vanilla_shapes = [(1024,), (512, 512), (512, 256, 128)]
     #activations = ['relu', 'tanh']
 
-    learning_rates = [0.001]
-    epochs = [5]
-    conv_shapes = [(30, 60, 90)]
-    vanilla_shapes = [(512, 256, 128)]
+    learning_rates = [1e-5]
+    epochs = [3]
+    conv_shapes = [(64, 128, 256, 512, 512)]
+    vanilla_shapes = [(4096, )]
     activations = ['relu']
 
     random_search(1, learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
-
     
