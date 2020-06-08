@@ -156,7 +156,7 @@ class VGG16:
             
             if final_test_cost < best:
                 #Save the model
-                path = "../Models/best/best_model.ckpt"
+                path = "/Models/best_model.ckpt"
                 self.saver.save(sess, path)
 
 
@@ -225,7 +225,7 @@ class VGG16:
         #Fourth layer flatten
         self.__layers.append(Flatten())
 
-        M1 = (self.D[0] * self.D[1] * conv_shapes[4]) // 1024
+        M1 = (self.D[0] * self.D[1] * conv_shapes[4]) // 900
 
         #Vanilla layers
         id = 6

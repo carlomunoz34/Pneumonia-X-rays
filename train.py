@@ -12,6 +12,7 @@ import tensorflow as tf
 import os
 
 SEED = 3435
+IMG_SIZE = 150
 
 def get_best():
     if not os.path.isfile("best_model.json"):
@@ -40,18 +41,19 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
     best_dict = None
 
     print("Starting random search at:", datetime.now())
+    print("With a best score of:", best_score)
 
     t0 = datetime.now()
     for i in range(iterations):
         tf.random.set_random_seed(SEED)
-        model = VGG16(save_path="../Models/temp/Vgg16.ckpt")
+        model = VGG16()
 
         #Choose hyperparams
         dict = get_random_dict(learning_rates, epochs, conv_shapes, vanilla_shapes, activations)
 
         print("%i of %i:" %(i+1, iterations), dict)
         
-        model.assemble((224, 224, 3), 2, conv_shapes=dict["conv_shape"], 
+        model.assemble((IMG_SIZE, IMG_SIZE, 3), 2, conv_shapes=dict["conv_shape"], 
                     vanilla_shapes=dict["vanilla_shape"], activation=dict["activation"])
 
         score = model.fit(get_next_batch_848, learning_rate=dict["learing rate"], 
@@ -78,6 +80,13 @@ def random_search(iterations, learning_rates, epochs, conv_shapes, vanilla_shape
 
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+    from tensorflow.compat.v1 import ConfigProto
+    from tensorflow.compat.v1 import InteractiveSession
+
+    config = ConfigProto()
+    config.gpu_options.allow_growth = True
+    session = InteractiveSession(config=config) 
+
 
     #learning_rates = [0.001, 0.0001]
     #epochs = [8, 9, 10]
@@ -85,8 +94,8 @@ if __name__ == "__main__":
     #vanilla_shapes = [(1024,), (512, 512), (512, 256, 128)]
     #activations = ['relu', 'tanh']
 
-    learning_rates = [1e-5]
-    epochs = [3]
+    learning_rates = [1e-4]
+    epochs = [5]
     conv_shapes = [(64, 128, 256, 512, 512)]
     vanilla_shapes = [(4096, )]
     activations = ['relu']

@@ -178,12 +178,12 @@ def get_next_batch_424(epoch, img_size=224, random=False):
     return Xtrain, Ytrain
 
 
-def get_next_batch_848(epoch, img_size=224, random=True):
+def get_next_batch_848(epoch, img_size=150, random=True):
     Xtrain = []
     Ytrain = []
 
     #Process normal images
-    train_normal_files = glob("../chest_xray/train/NORMAL/*.jpeg")
+    train_normal_files = glob("../../Datasets/chest_xray/train/NORMAL/*.jpeg")
     normal_lower = epoch * 11
     normal_upper = normal_lower + 11
 
@@ -199,7 +199,7 @@ def get_next_batch_848(epoch, img_size=224, random=True):
 
 
     #Process pneumonia images
-    train_phneumonia_files = glob("../chest_xray/train/PNEUMONIA/*.jpeg")
+    train_phneumonia_files = glob("../../Datasets/chest_xray/train/PNEUMONIA/*.jpeg")
     pneumonia_lower = epoch * 14
     pneumonia_upper = pneumonia_lower + 14
 
@@ -330,12 +330,12 @@ def get_test_26(epoch, img_size=128):
     return Xtrain, Ytrain
 
 
-def get_test_78(epoch, img_size=224):
+def get_test_78(epoch, img_size=150):
     Xtrain = []
     Ytrain = []
 
     #Process normal images
-    train_normal_files = glob("../chest_xray/test/NORMAL/*.jpeg")
+    train_normal_files = glob("../../Datasets/chest_xray/test/NORMAL/*.jpeg")
     normal_lower = epoch * 3
     normal_upper = normal_lower + 3 if normal_lower + 3 < len(train_normal_files) else len(train_normal_files) - 1
 
@@ -348,7 +348,7 @@ def get_test_78(epoch, img_size=224):
 
 
     #Process pneumonia images
-    train_phneumonia_files = glob("../chest_xray/test/PNEUMONIA/*.jpeg")
+    train_phneumonia_files = glob("../../Datasets/chest_xray/test/PNEUMONIA/*.jpeg")
     pneumonia_lower = epoch * 5
     pneumonia_upper = pneumonia_lower + 5 if pneumonia_lower + 5 < len(train_phneumonia_files) else len(train_phneumonia_files) -1
 

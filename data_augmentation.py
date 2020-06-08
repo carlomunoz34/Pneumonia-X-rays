@@ -14,8 +14,7 @@ def horizontal_flip(image: np.ndarray):
     return image[:, ::-1]
 
 def transform(num_of_transformations, path):
-    #transform_list = [random_rotation, random_noise, horizontal_flip]
-    transform_list = [horizontal_flip]
+    transform_list = [random_rotation, random_noise, horizontal_flip]
     
     #Augment pneumonia images
     files = glob(path + "*.jpeg")
@@ -29,7 +28,7 @@ def transform(num_of_transformations, path):
         #apply the transformations
         num_transforms = np.random.randint(len(transform_list)) + 1
 
-        for i in range(num_transforms):
+        for _ in range(num_transforms):
             current_transform = np.random.choice(transform_list)
             new_image = current_transform(image_to_transform).astype(np.uint8)
             
@@ -44,10 +43,10 @@ def transform(num_of_transformations, path):
 
 
 if __name__ == '__main__':
-    path = '../chest_xray/train/PNEUMONIA/'
+    path = '../../Datasets/chest_xray/small/224/train/PNEUMONIA/'
     print("Augmenting pneumonia images:")
     transform(8000, path)
 
     print("Augmenting normal images:")
-    path = '../chest_xray/train/NORMAL/'
+    path = '../../Datasets/chest_xray/small/224/train/NORMAL/'
     transform(8000, path)
