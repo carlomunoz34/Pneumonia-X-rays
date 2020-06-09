@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/carlo/anaconda3/envs/pytorch/bin/python",
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
-}
