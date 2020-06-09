@@ -1,5 +1,0 @@
-#!/bin/bash
-conda activate tensorflow_pip
-
-pthon train.py
-python train.py

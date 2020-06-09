@@ -1,1 +1,0 @@
-{"learing rate": 1e-05, "epoch": 3, "conv_shape": [64, 128, 256, 512, 512], "vanilla_shape": [4096], "activation": "relu", "cost": 427.20475912094116, "seed": 3435}
